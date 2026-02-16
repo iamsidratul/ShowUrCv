@@ -2,12 +2,15 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { AnalysisResult } from "./types";
 
-// Moved ai instantiation inside the function to ensure the latest API key is used
-// as per the guidelines for dynamic key selection.
-
 export const analyzeCV = async (cvText: string): Promise<AnalysisResult> => {
-  // Initialize GoogleGenAI inside the function scope
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const apiKey = process.env.API_KEY;
+  
+  if (!apiKey) {
+    throw new Error("API Key tidak ditemukan. Pastikan environment variabel sudah terkonfigurasi.");
+  }
+
+  const ai = new GoogleGenAI({ apiKey });
+  
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
