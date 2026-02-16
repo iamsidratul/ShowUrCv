@@ -20,7 +20,7 @@
         .bouncy:hover { transform: scale(1.02); }
         .bouncy:active { transform: scale(0.98); }
         
-        /* Custom scrollbar for better vibe */
+        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #10b981; border-radius: 10px; }
@@ -31,6 +31,20 @@
             100% { transform: translateY(0px); }
         }
         .animate-float { animation: float 3s ease-in-out infinite; }
+
+        /* Loading state styling */
+        #root:empty::before {
+            content: "Sabar ya, lagi nyiapin aplikasi keren buat kamu... ✨";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-weight: 800;
+            color: #10b981;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 20px;
+        }
     </style>
 <script type="importmap">
 {
@@ -42,8 +56,16 @@
   }
 }
 </script>
+<script>
+    // Pengaman agar aplikasi tidak crash di GitHub Pages karena objek 'process'
+    if (typeof window.process === 'undefined') {
+        window.process = { env: { API_KEY: '' } };
+    }
+</script>
 </head>
 <body class="bg-[#fafafa] text-slate-900">
     <div id="root"></div>
+    <!-- Script utama ditambahkan secara eksplisit -->
+    <script type="module" src="./index.tsx"></script>
 </body>
 </html>
